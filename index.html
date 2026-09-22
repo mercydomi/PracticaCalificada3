@@ -1,0 +1,1382 @@
+<!doctype html>
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Centro de Sorteos</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    
+  </
+
+  <body>
+    
+    <div class="aplicacion">
+      <!-- ==============================
+         BARRA LATERAL
+    =============================== -->
+
+      <aside class="barra-lateral">
+        <div class="marca">
+          <div class="marca-icono">🎲</div>
+
+          <div>
+            <strong>Sorteos</strong>
+            <span>Herramientas</span>
+          </div>
+        </div>
+
+        <nav class="navegacion">
+          <button class="boton-navegacion activo" data-seccion="ruleta">
+            <span class="icono-navegacion">🎡</span>
+
+            <span>
+              <strong>Ruleta</strong>
+              <small>Sorteo aleatorio</small>
+            </span>
+          </button>
+
+          <button class="boton-navegacion" data-seccion="equipos">
+            <span class="icono-navegacion">👥</span>
+
+            <span>
+              <strong>Equipos</strong>
+              <small>Crear grupos</small>
+            </span>
+          </button>
+        </nav>
+
+        <div class="ayuda-lateral">
+          <div class="ayuda-icono">⌨</div>
+
+          <div>
+            <strong>Atajos rápidos</strong>
+
+            <p>
+              ESPACIO · Girar<br />
+              S · Ocultar<br />
+              R · Reiniciar<br />
+              F · Pantalla completa
+            </p>
+          </div>
+        </div>
+
+        <div class="pie-lateral">Práctica universitaria</div>
+      </aside>
+
+      <!-- ==============================
+         CONTENIDO PRINCIPAL
+    =============================== -->
+
+      <main class="contenido-principal">
+        <!-- ==============================
+             SECCIÓN RULETA
+        =============================== -->
+
+        <section id="seccionRuleta" class="seccion activa">
+          <header class="cabecera-seccion">
+            <div>
+              <span class="etiqueta-seccion"> HERRAMIENTA 01 </span>
+
+              <h1>Ruleta interactiva</h1>
+
+              <p>
+                Agrega tus opciones y deja que la ruleta seleccione una al azar.
+              </p>
+            </div>
+
+            <div class="indicador-estado">
+              <span class="punto-estado"></span>
+              Lista para sortear
+            </div>
+          </header>
+
+          <div class="contenido-ruleta">
+            <!-- PANEL DE DATOS -->
+
+            <div class="tarjeta panel-datos">
+              <div class="cabecera-tarjeta">
+                <div>
+                  <h2>Opciones</h2>
+
+                  <p>Un elemento por cada línea</p>
+                </div>
+
+                <div id="contadorRuleta" class="contador">0</div>
+              </div>
+
+              <textarea
+                id="datosRuleta"
+                class="campo-textarea campo-ruleta"
+                placeholder="Escribe o pega tus opciones aquí...
+
+Ejemplo:
+Dominick
+Piero
+Pablo
+Carlos"
+              ></textarea>
+
+              
+              <div class="estado-datos">
+                <span> 💾 Guardado automáticamente </span>
+
+                <span id="estadoOcultos"> 0 ocultos </span>
+              </div>
+
+              <div class="acciones-principales">
+                <button id="botonIniciar" class="boton boton-principal">
+                  <span>▶</span>
+                  Iniciar
+                </button>
+
+                <button id="botonReiniciar" class="boton boton-secundario">
+                  <span>↻</span>
+                  Reiniciar
+                </button>
+
+                <button
+                  id="botonPantallaCompleta"
+                  class="boton boton-terciario"
+                >
+                  <span>⛶</span>
+                </button>
+              </div>
+
+              <div class="atajos">
+                <div class="atajo">
+                  <kbd>SPACE</kbd>
+                  <span>Girar</span>
+                </div>
+
+                <div class="atajo">
+                  <kbd>S</kbd>
+                  <span>Ocultar</span>
+                </div>
+
+                <div class="atajo">
+                  <kbd>E</kbd>
+                  <span>Editar</span>
+                </div>
+
+                <div class="atajo">
+                  <kbd>R</kbd>
+                  <span>Reiniciar</span>
+                </div>
+
+                <div class="atajo">
+                  <kbd>F</kbd>
+                  <span>Pantalla completa</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL RULETA -->
+
+            <div class="tarjeta panel-ruleta">
+              <div class="zona-ruleta">
+                <div class="contenedor-ruleta">
+                  <div class="indicador-ruleta"></div>
+
+                  <canvas id="canvasRuleta" width="600" height="600"> </canvas>
+                </div>
+
+                <div id="resultadoRuleta" class="resultado-ruleta">
+                  <span class="resultado-icono"> 🎯 </span>
+
+                  <div>
+                    <small>Resultado</small>
+
+                    <strong> Presiona iniciar para comenzar </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================
+             SECCIÓN EQUIPOS
+        =============================== -->
+
+        <section id="seccionEquipos" class="seccion">
+          <header class="cabecera-seccion">
+            <div>
+              <span class="etiqueta-seccion"> HERRAMIENTA 02 </span>
+
+              <h1>Sorteo de equipos</h1>
+
+              <p>
+                Distribuye aleatoriamente a tus participantes en diferentes
+                equipos.
+              </p>
+            </div>
+
+            <div class="indicador-estado">
+              <span class="punto-estado"></span>
+              Configuración
+            </div>
+          </header>
+
+          <!-- CONFIGURACIÓN -->
+
+          <div class="tarjeta">
+            <div class="cabecera-tarjeta">
+              <div>
+                <h2>Configuración del sorteo</h2>
+
+                <p>Define cómo quieres distribuir a los participantes.</p>
+              </div>
+
+              <div class="icono-cabecera">⚙</div>
+            </div>
+
+            <div class="formulario-equipos">
+              <!-- PARTICIPANTES -->
+
+              <div class="campo campo-participantes">
+                <label for="datosParticipantes"> Participantes </label>
+
+                <span class="texto-ayuda">
+                  Máximo 100 participantes · 50 caracteres por línea
+                </span>
+
+                <textarea
+                  id="datosParticipantes"
+                  class="campo-textarea campo-participantes-textarea"
+                  maxlength="5099"
+                  placeholder="Escribe un participante por línea...
+
+Ejemplo:
+Dominick
+Piero
+Pablo
+Juan"
+                ></textarea>
+
+                
+                <div class="barra-participantes">
+                  <span> 💾 Guardado automáticamente </span>
+
+                  <strong id="contadorParticipantes"> 0 / 100 </strong>
+                </div>
+              </div>
+
+              <!-- OPCIONES -->
+
+              <div class="panel-configuracion">
+                <div class="campo">
+                  <label for="tipoDistribucion"> Tipo de distribución </label>
+
+                  <select id="tipoDistribucion" class="campo-select">
+                    <option value="cantidadEquipos">Cantidad de equipos</option>
+
+                    <option value="participantesPorEquipo">
+                      Participantes por equipo
+                    </option>
+                  </select>
+                </div>
+
+                <div class="campo">
+                  <label id="etiquetaCantidad" for="cantidadDistribucion">
+                    Cantidad de equipos
+                  </label>
+
+                  <input
+                    id="cantidadDistribucion"
+                    class="campo-input"
+                    type="number"
+                    min="1"
+                    value="2"
+                  />
+                </div>
+
+                <div class="campo">
+                  <label for="tituloPersonalizado">
+                    Título personalizado
+                  </label>
+
+                  <input
+                    id="tituloPersonalizado"
+                    class="campo-input"
+                    type="text"
+                    maxlength="100"
+                    placeholder="Ej. Equipos para exposición"
+                  />
+                </div>
+
+                <button
+                  id="botonGenerarEquipos"
+                  class="boton boton-principal boton-generar"
+                >
+                  <span>⚡</span>
+                  Generar equipos
+                </button>
+              </div>
+            </div>
+
+            <div id="mensajeEquipos" class="mensaje"></div>
+          </div>
+
+          <!-- RESULTADOS -->
+
+          <div id="contenedorResultados" class="resultados-equipos">
+            <div class="cabecera-resultados">
+              <div>
+                <span class="etiqueta-seccion"> RESULTADO </span>
+
+                <h2 id="tituloResultados">Equipos generados</h2>
+
+                <p>Distribución aleatoria de los participantes.</p>
+              </div>
+
+              <div class="acciones-resultados">
+                <button
+                  id="botonCopiarResultados"
+                  class="boton boton-secundario"
+                >
+                  📋
+                  <span>Copiar</span>
+                </button>
+
+                <button id="botonCopiarColumnas" class="boton boton-terciario">
+                  📑
+                  <span>Columnas</span>
+                </button>
+
+                <button id="botonDescargarJpg" class="boton boton-principal">
+                  🖼
+                  <span>Descargar JPG</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="rejillaEquipos" class="rejilla-equipos"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+
+
+      const CLAVE_RUleta = "datos_ruleta_universitaria";
+
+      const CLAVE_EQUIPOS = "datos_participantes_equipos";
+
+      const CLAVE_TIPO_DISTRIBUCION = "tipo_distribucion_equipos";
+
+      const CLAVE_TITULO_EQUIPOS = "titulo_equipos";
+
+      const COLORES_RULETA = [
+        "#6366f1",
+        "#06b6d4",
+        "#f59e0b",
+        "#10b981",
+        "#ec4899",
+      ];
+
+
+      let elementosRuleta = [];
+
+      let elementosOcultos = [];
+
+      let ultimoElementoSeleccionado = null;
+
+      let ruletaGirando = false;
+
+      let anguloActual = 0;
+
+      let equiposGenerados = [];
+
+
+      const datosRuleta = document.getElementById("datosRuleta");
+
+      const canvasRuleta = document.getElementById("canvasRuleta");
+
+      const contextoRuleta = canvasRuleta.getContext("2d");
+
+      const botonIniciar = document.getElementById("botonIniciar");
+
+      const botonReiniciar = document.getElementById("botonReiniciar");
+
+      const botonPantallaCompleta = document.getElementById(
+        "botonPantallaCompleta",
+      );
+
+      const resultadoRuleta = document.getElementById("resultadoRuleta");
+
+      const contadorRuleta = document.getElementById("contadorRuleta");
+
+      const estadoOcultos = document.getElementById("estadoOcultos");
+
+      const datosParticipantes = document.getElementById("datosParticipantes");
+
+      const contadorParticipantes = document.getElementById(
+        "contadorParticipantes",
+      );
+
+      const tipoDistribucion = document.getElementById("tipoDistribucion");
+
+      const cantidadDistribucion = document.getElementById(
+        "cantidadDistribucion",
+      );
+
+      const etiquetaCantidad = document.getElementById("etiquetaCantidad");
+
+      const tituloPersonalizado = document.getElementById(
+        "tituloPersonalizado",
+      );
+
+      const botonGenerarEquipos = document.getElementById(
+        "botonGenerarEquipos",
+      );
+
+      const contenedorResultados = document.getElementById(
+        "contenedorResultados",
+      );
+
+      const rejillaEquipos = document.getElementById("rejillaEquipos");
+
+      const tituloResultados = document.getElementById("tituloResultados");
+
+      const mensajeEquipos = document.getElementById("mensajeEquipos");
+
+      const botonCopiarResultados = document.getElementById(
+        "botonCopiarResultados",
+      );
+
+      const botonCopiarColumnas = document.getElementById(
+        "botonCopiarColumnas",
+      );
+
+      const botonDescargarJpg = document.getElementById("botonDescargarJpg");
+
+
+      document.querySelectorAll(".boton-navegacion").forEach((boton) => {
+        boton.addEventListener("click", () => {
+          const seccion = boton.dataset.seccion;
+
+          document.querySelectorAll(".boton-navegacion").forEach((elemento) => {
+            elemento.classList.remove("activo");
+          });
+
+          boton.classList.add("activo");
+
+          document.querySelectorAll(".seccion").forEach((elemento) => {
+            elemento.classList.remove("activa");
+          });
+
+          document
+            .getElementById(
+              seccion === "ruleta" ? "seccionRuleta" : "seccionEquipos",
+            )
+            .classList.add("activa");
+        });
+      });
+
+
+      function guardarDatosRuleta() {
+        localStorage.setItem(CLAVE_RUleta, datosRuleta.value);
+      }
+
+      function guardarDatosEquipos() {
+        localStorage.setItem(CLAVE_EQUIPOS, datosParticipantes.value);
+
+        localStorage.setItem(CLAVE_TIPO_DISTRIBUCION, tipoDistribucion.value);
+
+        localStorage.setItem(CLAVE_TITULO_EQUIPOS, tituloPersonalizado.value);
+      }
+
+      function cargarDatosGuardados() {
+        const ruletaGuardada = localStorage.getItem(CLAVE_RUleta);
+
+        if (ruletaGuardada !== null) {
+          datosRuleta.value = ruletaGuardada;
+        }
+
+        const participantesGuardados = localStorage.getItem(CLAVE_EQUIPOS);
+
+        if (participantesGuardados !== null) {
+          datosParticipantes.value = participantesGuardados;
+        }
+
+        const tipoGuardado = localStorage.getItem(CLAVE_TIPO_DISTRIBUCION);
+
+        if (tipoGuardado !== null) {
+          tipoDistribucion.value = tipoGuardado;
+        }
+
+        const tituloGuardado = localStorage.getItem(CLAVE_TITULO_EQUIPOS);
+
+        if (tituloGuardado !== null) {
+          tituloPersonalizado.value = tituloGuardado;
+        }
+
+        actualizarElementosRuleta();
+
+        actualizarContadorParticipantes();
+
+        actualizarEtiquetaCantidad();
+      }
+
+
+      function obtenerElementosTexto(texto) {
+        return texto
+          .split("\n")
+          .map((elemento) => elemento.trim())
+          .filter((elemento) => elemento.length > 0);
+      }
+
+
+      function actualizarElementosRuleta() {
+        const elementos = obtenerElementosTexto(datosRuleta.value);
+
+        elementosRuleta = elementos.filter(
+          (elemento) => !elementosOcultos.includes(elemento),
+        );
+
+        contadorRuleta.textContent = elementosRuleta.length;
+
+        estadoOcultos.textContent = `${elementosOcultos.length} ocultos`;
+
+        dibujarRuleta();
+      }
+
+      function dibujarRuleta() {
+        const ancho = canvasRuleta.width;
+
+        const alto = canvasRuleta.height;
+
+        const centroX = ancho / 2;
+
+        const centroY = alto / 2;
+
+        const radio = Math.min(ancho, alto) / 2 - 25;
+
+        contextoRuleta.clearRect(0, 0, ancho, alto);
+
+        if (elementosRuleta.length === 0) {
+          contextoRuleta.beginPath();
+
+          contextoRuleta.arc(centroX, centroY, radio, 0, Math.PI * 2);
+
+          contextoRuleta.fillStyle = "#eef2f6";
+
+          contextoRuleta.fill();
+
+          contextoRuleta.fillStyle = "#667085";
+
+          contextoRuleta.font = "bold 24px Arial";
+
+          contextoRuleta.textAlign = "center";
+
+          contextoRuleta.textBaseline = "middle";
+
+          contextoRuleta.fillText("Agrega elementos", centroX, centroY);
+
+          return;
+        }
+
+        const cantidad = elementosRuleta.length;
+
+        const anguloSector = (Math.PI * 2) / cantidad;
+
+        elementosRuleta.forEach((elemento, indice) => {
+          const anguloInicio =
+            anguloActual + indice * anguloSector - Math.PI / 2;
+
+          const anguloFinal = anguloInicio + anguloSector;
+
+          contextoRuleta.beginPath();
+
+          contextoRuleta.moveTo(centroX, centroY);
+
+          contextoRuleta.arc(
+            centroX,
+            centroY,
+            radio,
+            anguloInicio,
+            anguloFinal,
+          );
+
+          contextoRuleta.closePath();
+
+          contextoRuleta.fillStyle =
+            COLORES_RULETA[indice % COLORES_RULETA.length];
+
+          contextoRuleta.fill();
+
+          contextoRuleta.strokeStyle = "rgba(255,255,255,.8)";
+
+          contextoRuleta.lineWidth = 2;
+
+          contextoRuleta.stroke();
+
+          contextoRuleta.save();
+
+          const anguloMedio = anguloInicio + anguloSector / 2;
+
+          contextoRuleta.translate(centroX, centroY);
+
+          contextoRuleta.rotate(anguloMedio);
+
+          contextoRuleta.textAlign = "right";
+
+          contextoRuleta.textBaseline = "middle";
+
+          let tamañoTexto = 19;
+
+          if (elemento.length > 18) {
+            tamañoTexto = 15;
+          }
+
+          if (elemento.length > 28) {
+            tamañoTexto = 12;
+          }
+
+          contextoRuleta.font = `bold ${tamañoTexto}px Arial`;
+
+          contextoRuleta.fillStyle = "#ffffff";
+
+          contextoRuleta.shadowColor = "rgba(0,0,0,.3)";
+
+          contextoRuleta.shadowBlur = 3;
+
+          const textoVisible =
+            elemento.length > 35 ? elemento.substring(0, 35) + "..." : elemento;
+
+          contextoRuleta.fillText(textoVisible, radio - 15, 0);
+
+          contextoRuleta.restore();
+        });
+
+        /* CENTRO */
+
+        contextoRuleta.beginPath();
+
+        contextoRuleta.arc(centroX, centroY, 58, 0, Math.PI * 2);
+
+        contextoRuleta.fillStyle = "#ffffff";
+
+        contextoRuleta.fill();
+
+        contextoRuleta.strokeStyle = "#d0d5dd";
+
+        contextoRuleta.lineWidth = 5;
+
+        contextoRuleta.stroke();
+
+        contextoRuleta.fillStyle = "#344054";
+
+        contextoRuleta.font = "bold 16px Arial";
+
+        contextoRuleta.textAlign = "center";
+
+        contextoRuleta.textBaseline = "middle";
+
+        contextoRuleta.fillText("GIRAR", centroX, centroY);
+      }
+
+      function mostrarResultado(texto, mensaje = false) {
+        resultadoRuleta.innerHTML = `
+            <span class="resultado-icono">
+                ${mensaje ? "ℹ️" : "🎉"}
+            </span>
+
+            <div>
+                <small>Resultado</small>
+                <strong>${texto}</strong>
+            </div>
+        `;
+      }
+
+function iniciarRuleta() {
+    if (ruletaGirando) {
+        return;
+    }
+
+    if (elementosRuleta.length === 0) {
+        mostrarResultado("No hay elementos disponibles.", true);
+        return;
+    }
+
+    ruletaGirando = true;
+    botonIniciar.disabled = true;
+
+    /*
+     * 1. Elegimos UN participante de la lista.
+     * Este será el ganador real del sorteo.
+     */
+    const cantidad = elementosRuleta.length;
+
+    const indiceSeleccionado =
+        Math.floor(Math.random() * cantidad);
+
+    const ganador =
+        elementosRuleta[indiceSeleccionado];
+
+    /*
+     * 2. Calculamos el tamaño de cada sector.
+     */
+    const anguloSector =
+        (Math.PI * 2) / cantidad;
+
+    /*
+     * 3. Calculamos exactamente el centro
+     * del sector ganador.
+     */
+    const anguloCentroSector =
+        indiceSeleccionado * anguloSector +
+        anguloSector / 2;
+
+    /*
+     * El indicador está arriba, en -90°.
+     *
+     * Queremos que el centro del sector ganador
+     * termine exactamente debajo del indicador.
+     */
+    const anguloIndicador =
+        -Math.PI / 2;
+
+    /*
+     * Calculamos cuánto debemos girar.
+     */
+    let diferencia =
+        anguloIndicador -
+        (
+            anguloActual +
+            anguloCentroSector
+        );
+
+    /*
+     * Normalizamos la diferencia para que
+     * siempre sea positiva.
+     */
+    diferencia =
+        (
+            diferencia +
+            Math.PI * 2
+        ) %
+        (Math.PI * 2);
+
+    /*
+     * Agregamos entre 5 y 8 vueltas completas.
+     */
+    const vueltas =
+        (
+            5 +
+            Math.floor(Math.random() * 4)
+        ) *
+        Math.PI *
+        2;
+
+    /*
+     * Ángulo final exacto.
+     */
+    const anguloInicio =
+        anguloActual;
+
+    const anguloDestino =
+        anguloActual +
+        vueltas +
+        diferencia;
+
+    const duracion = 4500;
+
+    const tiempoInicial =
+        performance.now();
+
+
+    function animarRuleta(tiempoActual) {
+
+        const progreso =
+            Math.min(
+                (
+                    tiempoActual -
+                    tiempoInicial
+                ) / duracion,
+                1
+            );
+
+        /*
+         * Desaceleración suave.
+         */
+        const suavizado =
+            1 -
+            Math.pow(
+                1 - progreso,
+                4
+            );
+
+        anguloActual =
+            anguloInicio +
+            (
+                anguloDestino -
+                anguloInicio
+            ) *
+            suavizado;
+
+        dibujarRuleta();
+
+
+        if (progreso < 1) {
+
+            requestAnimationFrame(
+                animarRuleta
+            );
+
+        } else {
+
+            /*
+             * Forzamos el ángulo final exacto.
+             * Esto evita cualquier pequeño error
+             * de precisión de la animación.
+             */
+            anguloActual =
+                anguloDestino;
+
+            dibujarRuleta();
+
+            ruletaGirando = false;
+
+            botonIniciar.disabled = false;
+
+            /*
+             * IMPORTANTE:
+             * Mostramos el mismo elemento que
+             * seleccionamos al principio.
+             */
+            ultimoElementoSeleccionado =
+                ganador;
+
+            mostrarResultado(
+                ganador
+            );
+        }
+    }
+
+
+    requestAnimationFrame(
+        animarRuleta
+    );
+}
+
+      function ocultarUltimoElemento() {
+        if (!ultimoElementoSeleccionado) {
+          mostrarResultado("Primero realiza un sorteo.", true);
+
+          return;
+        }
+
+        if (!elementosOcultos.includes(ultimoElementoSeleccionado)) {
+          elementosOcultos.push(ultimoElementoSeleccionado);
+        }
+
+        actualizarElementosRuleta();
+
+        mostrarResultado(`"${ultimoElementoSeleccionado}" fue ocultado.`, true);
+
+        ultimoElementoSeleccionado = null;
+      }
+
+      function reiniciarRuleta() {
+        elementosOcultos = [];
+
+        ultimoElementoSeleccionado = null;
+
+        anguloActual = 0;
+
+        actualizarElementosRuleta();
+
+        mostrarResultado("Todos los elementos participan nuevamente.", true);
+      }
+
+
+      datosRuleta.addEventListener("input", () => {
+        guardarDatosRuleta();
+
+        elementosOcultos = [];
+
+        actualizarElementosRuleta();
+      });
+
+      datosRuleta.addEventListener("click", () => {
+        datosRuleta.focus();
+      });
+
+      botonIniciar.addEventListener("click", iniciarRuleta);
+
+      canvasRuleta.addEventListener("click", iniciarRuleta);
+
+      botonReiniciar.addEventListener("click", reiniciarRuleta);
+
+      botonPantallaCompleta.addEventListener("click", activarPantallaCompleta);
+
+      function activarPantallaCompleta() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+
+      document.addEventListener("keydown", (evento) => {
+        const activo = document.activeElement;
+
+        const editando =
+          activo &&
+          (activo.tagName === "TEXTAREA" || activo.tagName === "INPUT");
+
+        if (evento.code === "Space" && !editando) {
+          evento.preventDefault();
+
+          iniciarRuleta();
+
+          return;
+        }
+
+        if (editando) {
+          return;
+        }
+
+        const tecla = evento.key.toLowerCase();
+
+        if (tecla === "s") {
+          ocultarUltimoElemento();
+        }
+
+        if (tecla === "e") {
+          datosRuleta.focus();
+        }
+
+        if (tecla === "r") {
+          reiniciarRuleta();
+        }
+
+        if (tecla === "f") {
+          activarPantallaCompleta();
+        }
+      });
+
+
+      function obtenerParticipantes() {
+        return datosParticipantes.value
+          .split("\n")
+          .map((participante) => participante.trim())
+          .filter((participante) => participante.length > 0)
+          .map((participante) => participante.substring(0, 50))
+          .slice(0, 100);
+      }
+
+      function actualizarContadorParticipantes() {
+        const participantes = obtenerParticipantes();
+
+        contadorParticipantes.textContent = `${participantes.length} / 100`;
+      }
+
+      function actualizarEtiquetaCantidad() {
+        if (tipoDistribucion.value === "cantidadEquipos") {
+          etiquetaCantidad.textContent = "Cantidad de equipos";
+        } else {
+          etiquetaCantidad.textContent = "Participantes por equipo";
+        }
+      }
+
+      function mezclarParticipantes(participantes) {
+        const mezclados = [...participantes];
+
+        for (let indice = mezclados.length - 1; indice > 0; indice--) {
+          const posicion = Math.floor(Math.random() * (indice + 1));
+
+          [mezclados[indice], mezclados[posicion]] = [
+            mezclados[posicion],
+            mezclados[indice],
+          ];
+        }
+
+        return mezclados;
+      }
+
+      function generarEquipos() {
+        const participantes = obtenerParticipantes();
+
+        if (participantes.length === 0) {
+          mostrarMensajeEquipos("Ingresa al menos un participante.");
+
+          return;
+        }
+
+        const valor = Number(cantidadDistribucion.value);
+
+        if (!Number.isInteger(valor) || valor < 1) {
+          mostrarMensajeEquipos("Ingresa una cantidad válida.");
+
+          return;
+        }
+
+        const mezclados = mezclarParticipantes(participantes);
+
+        let cantidadEquipos;
+
+        if (tipoDistribucion.value === "cantidadEquipos") {
+          cantidadEquipos = Math.min(valor, participantes.length);
+        } else {
+          cantidadEquipos = Math.ceil(participantes.length / valor);
+        }
+
+        equiposGenerados = Array.from(
+          {
+            length: cantidadEquipos,
+          },
+          () => [],
+        );
+
+        mezclados.forEach((participante, indice) => {
+          equiposGenerados[indice % cantidadEquipos].push(participante);
+        });
+
+        mostrarResultadosEquipos();
+
+        guardarDatosEquipos();
+
+        mostrarMensajeEquipos("Equipos generados correctamente.");
+      }
+
+      function mostrarResultadosEquipos() {
+        rejillaEquipos.innerHTML = "";
+
+        const titulo = tituloPersonalizado.value.trim();
+
+        tituloResultados.textContent = titulo || "Equipos generados";
+
+        equiposGenerados.forEach((equipo, indice) => {
+          const tarjeta = document.createElement("article");
+
+          tarjeta.className = "tarjeta-equipo";
+
+          const encabezado = document.createElement("div");
+
+          encabezado.className = "encabezado-equipo";
+
+          encabezado.innerHTML = `
+                    <span class="numero-equipo">
+                        ${String(indice + 1).padStart(2, "0")}
+                    </span>
+
+                    <div>
+                        <strong>
+                            Equipo ${indice + 1}
+                        </strong>
+
+                        <small>
+                            ${equipo.length}
+                            integrante${equipo.length === 1 ? "" : "s"}
+                        </small>
+                    </div>
+                `;
+
+          const lista = document.createElement("ol");
+
+          lista.className = "lista-equipo";
+
+          equipo.forEach((participante) => {
+            const elemento = document.createElement("li");
+
+            elemento.textContent = participante;
+
+            lista.appendChild(elemento);
+          });
+
+          tarjeta.appendChild(encabezado);
+
+          tarjeta.appendChild(lista);
+
+          rejillaEquipos.appendChild(tarjeta);
+        });
+
+        contenedorResultados.classList.add("visible");
+
+        contenedorResultados.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      function mostrarMensajeEquipos(mensaje) {
+        mensajeEquipos.textContent = mensaje;
+
+        mensajeEquipos.classList.add("visible");
+
+        setTimeout(() => {
+          mensajeEquipos.classList.remove("visible");
+        }, 3000);
+      }
+
+
+      function obtenerTextoResultados() {
+        const titulo = tituloPersonalizado.value.trim() || "Equipos generados";
+
+        let texto = `${titulo}\n\n`;
+
+        equiposGenerados.forEach((equipo, indice) => {
+          texto += `EQUIPO ${indice + 1}\n`;
+
+          equipo.forEach((participante) => {
+            texto += `- ${participante}\n`;
+          });
+
+          texto += "\n";
+        });
+
+        return texto.trim();
+      }
+
+      async function copiarResultados() {
+        if (equiposGenerados.length === 0) {
+          return;
+        }
+
+        const texto = obtenerTextoResultados();
+
+        try {
+          await navigator.clipboard.writeText(texto);
+
+          mostrarMensajeEquipos("Resultados copiados al portapapeles.");
+        } catch {
+          copiarTextoAlternativo(texto);
+        }
+      }
+
+      function obtenerTextoColumnas() {
+        if (equiposGenerados.length === 0) {
+          return "";
+        }
+
+        const columnas = equiposGenerados.map((equipo, indice) => [
+          `EQUIPO ${indice + 1}`,
+          ...equipo,
+        ]);
+
+        const anchos = columnas.map((columna) =>
+          Math.max(...columna.map((texto) => texto.length)),
+        );
+
+        const filas = Math.max(...columnas.map((columna) => columna.length));
+
+        let resultado = "";
+
+        for (let fila = 0; fila < filas; fila++) {
+          columnas.forEach((columna, indice) => {
+            const texto = columna[fila] || "";
+
+            resultado += texto.padEnd(anchos[indice] + 5, " ");
+          });
+
+          resultado += "\n";
+        }
+
+        return resultado.trimEnd();
+      }
+
+      async function copiarColumnas() {
+        if (equiposGenerados.length === 0) {
+          return;
+        }
+
+        const texto = obtenerTextoColumnas();
+
+        try {
+          await navigator.clipboard.writeText(texto);
+
+          mostrarMensajeEquipos("Equipos copiados en formato de columnas.");
+        } catch {
+          copiarTextoAlternativo(texto);
+        }
+      }
+
+      function copiarTextoAlternativo(texto) {
+        const temporal = document.createElement("textarea");
+
+        temporal.value = texto;
+
+        document.body.appendChild(temporal);
+
+        temporal.select();
+
+        document.execCommand("copy");
+
+        temporal.remove();
+
+        mostrarMensajeEquipos("Texto copiado correctamente.");
+      }
+
+
+      function descargarJpg() {
+        if (equiposGenerados.length === 0) {
+          return;
+        }
+
+        const ancho = 1400;
+
+        const anchoTarjeta = 410;
+
+        const separacion = 30;
+
+        const columnas = Math.min(3, equiposGenerados.length);
+
+        const filas = Math.ceil(equiposGenerados.length / columnas);
+
+        const altoTarjeta =
+          180 +
+          Math.max(...equiposGenerados.map((equipo) => equipo.length * 48));
+
+        const alto = 180 + filas * (altoTarjeta + separacion);
+
+        const lienzo = document.createElement("canvas");
+
+        lienzo.width = ancho;
+
+        lienzo.height = alto;
+
+        const contexto = lienzo.getContext("2d");
+
+        /* Fondo */
+
+        contexto.fillStyle = "#f4f7fb";
+
+        contexto.fillRect(0, 0, ancho, alto);
+
+        /* Título */
+
+        const titulo = tituloPersonalizado.value.trim() || "Equipos generados";
+
+        contexto.fillStyle = "#172033";
+
+        contexto.font = "bold 42px Arial";
+
+        contexto.fillText(titulo, 60, 65);
+
+        contexto.fillStyle = "#667085";
+
+        contexto.font = "21px Arial";
+
+        contexto.fillText(
+          `${equiposGenerados.length} equipos · ${obtenerParticipantes().length} participantes`,
+          60,
+          105,
+        );
+
+        /* Tarjetas */
+
+        equiposGenerados.forEach((equipo, indice) => {
+          const columna = indice % columnas;
+
+          const fila = Math.floor(indice / columnas);
+
+          const x = 50 + columna * (anchoTarjeta + separacion);
+
+          const y = 145 + fila * (altoTarjeta + separacion);
+
+          contexto.fillStyle = "#ffffff";
+
+          contexto.strokeStyle = "#e4e7ec";
+
+          contexto.lineWidth = 2;
+
+          contexto.beginPath();
+
+          contexto.roundRect(x, y, anchoTarjeta, altoTarjeta, 18);
+
+          contexto.fill();
+
+          contexto.stroke();
+
+          /* Encabezado */
+
+          contexto.fillStyle = "#eef2ff";
+
+          contexto.beginPath();
+
+          contexto.roundRect(x, y, anchoTarjeta, 80, 18);
+
+          contexto.fill();
+
+          contexto.fillRect(x, y + 40, anchoTarjeta, 40);
+
+          contexto.fillStyle = "#4f46e5";
+
+          contexto.font = "bold 25px Arial";
+
+          contexto.fillText(`Equipo ${indice + 1}`, x + 25, y + 50);
+
+          contexto.fillStyle = "#667085";
+
+          contexto.font = "17px Arial";
+
+          contexto.fillText(
+            `${equipo.length} integrante${equipo.length === 1 ? "" : "s"}`,
+            x + 25,
+            y + 70,
+          );
+
+          /* Participantes */
+
+          contexto.fillStyle = "#344054";
+
+          contexto.font = "19px Arial";
+
+          equipo.forEach((participante, posicion) => {
+            contexto.fillText(
+              `${posicion + 1}. ${participante}`,
+              x + 25,
+              y + 120 + posicion * 48,
+            );
+          });
+        });
+
+        const enlace = document.createElement("a");
+
+        enlace.download = "equipos-generados.jpg";
+
+        enlace.href = lienzo.toDataURL("image/jpeg", 0.95);
+
+        enlace.click();
+      }
+
+
+      datosParticipantes.addEventListener("input", () => {
+        guardarDatosEquipos();
+
+        actualizarContadorParticipantes();
+      });
+
+      tipoDistribucion.addEventListener("change", () => {
+        actualizarEtiquetaCantidad();
+
+        guardarDatosEquipos();
+      });
+
+      cantidadDistribucion.addEventListener("input", guardarDatosEquipos);
+
+      tituloPersonalizado.addEventListener("input", guardarDatosEquipos);
+
+      botonGenerarEquipos.addEventListener("click", generarEquipos);
+
+      botonCopiarResultados.addEventListener("click", copiarResultados);
+
+      botonCopiarColumnas.addEventListener("click", copiarColumnas);
+
+      botonDescargarJpg.addEventListener("click", descargarJpg);
+
+
+      cargarDatosGuardados();
+
+      window.addEventListener("resize", dibujarRuleta);
+    </script>
+    
+  </body>
+</html>
